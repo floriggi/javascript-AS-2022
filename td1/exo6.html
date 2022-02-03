@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>dessin-triangle-saisie.html</title>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <h1>Dessine un triangle</h1>
+
+    <form>
+        <label for="taille">Taille :</label>
+        <span id="le-min"></span>
+        <input id="taille" name="taille" type="range" min="1" max="20">
+        <span id="le-max"></span>
+    </form>
+
+    <br>
+    <div id="zone-triangle"></div>
+
+    <script>
+        // on récupère l'input
+        let monInput = document.getElementById('taille');
+        // on récupère les valeurs min et max de l'input
+        // et on les affiche autour de l'input
+        document.getElementById('le-min').innerHTML = monInput.getAttribute('min');
+        document.getElementById('le-max').innerHTML = monInput.getAttribute('max');
+
+        // on récupère la zone où sera affiché le triangle
+        let zoneTriangle = document.getElementById('zone-triangle');
+
+        // on ajoute un listener de type onchange sur l'input
+        monInput.addEventListener('change', function () {
+            let taille = monInput.value;
+
+            if (taille <= 0) {
+                taille = 10;
+            }
+
+            if (taille <= 20) {
+                let i;
+                let j;
+                let triangle = "";
+
+                for (i = 1; i <= taille; i++) {
+                    for (j = 1; j <= i; j++) {
+                        triangle += '* ';
+                    }
+
+                    triangle += '<br>';
+                }
+
+                zoneTriangle.innerHTML = 'Triangle de taille ' + taille + '<br><br>';
+                zoneTriangle.innerHTML += triangle;
+            } else {
+                alert('Triangle trop grand !');
+            }
+        });
+    </script>
+</body>
+</html>
