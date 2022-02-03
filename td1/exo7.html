@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>exo7</title>
+    <style>
+        body {
+            margin: 2em;
+        }
+        #cadre {
+            border: solid black 2px;
+            width: 300px;
+            min-height: 200px;
+        }
+        .corail {
+            background-color: coral;
+        }
+        .bleu {
+            background-color: cornflowerblue;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Le rectangle change de couleur</h1>
+    <div id="cadre" class="corail" onmouseenter="changerCouleurPourBleu()" onmouseout="changerCouleurPourCorail()"></div>
+
+    <script type="text/javascript">
+        function changerCouleurPourBleu() {
+            document.getElementById('cadre').className = 'bleu';
+        }
+
+        function changerCouleurPourCorail() {
+            document.getElementById('cadre').className = 'corail';
+        }
+    </script>
+</body>
+</html>
