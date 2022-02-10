@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Le Carrousel 2</title>
+    <link rel="stylesheet" type="text/css" href="carrousel.css">
+</head>
+
+<body>
+    <section>
+        <div>
+            <img src="img/pub1.jpg" alt="pub" id="grandeImg" data-radio="pub1">
+        </div>
+
+        <div id="boite">
+            <img src="img/left.png" id="left" class="flecheCachee" onclick="changerImageGauche();">
+            <input checked type=radio name=slider id=pub1 onclick="afficherImage(this.id);">
+            <input type=radio name=slider id=pub2 onclick="afficherImage(this.id);">
+            <input type=radio name=slider id=pub3 onclick="afficherImage(this.id);">
+            <input type=radio name=slider id=pub4 onclick="afficherImage(this.id);">
+            <input type=radio name=slider id=pub5 onclick="afficherImage(this.id);">
+            <input type=radio name=slider id=pub6 onclick="afficherImage(this.id);">
+            <img src="img/right.png" id="right" class="flecheVisible" onclick="changerImageDroite();">
+        </div>
+    </section>
+
+
+    <script type="text/javascript" src="jquery-3.3.1.min.js"></script>
+    <script>
+        let intervalle = setInterval(changerImageDroite, 3500);
+
+        function afficherImage(id) {
+            let image = $('#grandeImg');
+            image.attr('src', 'img/' + id + '.jpg');
+            image.data('radio', id);
+            $('#' + id).prop('checked', true);
+
+            if ($('#pub6').is(':checked')) {
+                $('#right').addClass('flecheCachee').removeClass('flecheVisible');
+            } else {
+                $('#right').addClass('flecheVisible').removeClass('flecheCachee');
+            }
+
+            if ($('#pub1').is(':checked')) {
+                $('#left').addClass('flecheCachee').removeClass('flecheVisible');
+            } else {
+                $('#left').addClass('flecheVisible').removeClass('flecheCachee');
+            }
+
+            remettreAZeroIntervalle();
+        }
+
+        function changerImageGauche() {
+            let image = $('#grandeImg');
+            let boutonRadioActuel = $('#' + image.data('radio'));
+            let premierBoutonRadio = $('#boite input').first();
+            let idProchainBoutonRadio;
+
+            if (boutonRadioActuel.is(premierBoutonRadio)) {
+                idProchainBoutonRadio = $('#boite input').last().attr('id');
+            } else {
+                idProchainBoutonRadio = boutonRadioActuel.prev().attr('id');
+            }
+
+            afficherImage(idProchainBoutonRadio);
+        }
+
+        function changerImageDroite() {
+            let image = $('#grandeImg');
+            let boutonRadioActuel = $('#' + image.data('radio'));
+            let dernierBoutonRadio = $('#boite input').last();
+            let idProchainBoutonRadio;
+
+            if (boutonRadioActuel.is(dernierBoutonRadio)) {
+                idProchainBoutonRadio = $('#boite input').first().attr('id');
+            } else {
+                idProchainBoutonRadio = boutonRadioActuel.next().attr('id');
+            }
+
+            afficherImage(idProchainBoutonRadio);
+        }
+
+        function remettreAZeroIntervalle() {
+            clearInterval(intervalle);
+            intervalle = setInterval(changerImageDroite, 4000);
+        }
+    </script>
+</body>
+</html>
