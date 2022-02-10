@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Le boncoin</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Chaton Persan</h1>
+        <p>Mise en ligne par Karima</p>
+    </header>
+
+    <div id="articles">
+        <article>
+            <h3>Contacter l'annonceur</h3>
+            <p><a>Envoyer un email</a></p>
+            <p><a>Voir le numero de telephone</a></p>
+        </article>
+        <article>
+            <h3>Gerer votre annonce</h3>
+            <p><a>Modifier</a></p>
+            <p><a>Supprimer</a></p>
+            <p><a>Remonter en tete de liste</a></p>
+            <p><a>Mettre en avant</a></p>
+        </article>
+    </div>
+
+    <section>
+        <div>
+            <img src="img/img1.jpg" alt="photo de chaton" id="grandeImg" data-miniature="mini1">
+            <figure id="fleches">
+                <img src="img/left.png" alt="gauche" id="left" onclick="changerImage(this.id)">
+                <img src="img/right.png" alt="droite" id="right" onclick="changerImage(this.id)">
+            </figure>
+        </div>
+
+        <figure id="miniatures">
+            <img src="img/img1.jpg" alt="mini 1" class="mini noir" id="mini1" onMouseOver="afficherImage(this)">
+            <img src="img/img2.jpg" alt="mini 2" class="mini" id="mini2" onMouseOver="afficherImage(this)">
+            <img src="img/img3.jpg" alt="mini 3" class="mini" id="mini3" onMouseOver="afficherImage(this)">
+        </figure>
+    </section>
+
+    <script type="text/javascript">
+        let ancienne = document.getElementById('mini1');
+
+        /**
+         * Affiche une grande image en fonction de la miniature passée en paramètre.
+         */
+        function afficherImage(miniature) {
+            let image = document.getElementById('grandeImg');
+            image.src = miniature.src;
+            image.dataset.miniature = miniature.id;
+
+            miniature.className = 'mini noir';
+            ancienne.className = 'mini neutre';
+
+            ancienne = miniature;
+        }
+
+        /**
+         * Appelée par un clic sur les flêches.
+         * @param direction gauche ou droite
+         */
+        function changerImage(direction) {
+            let image = document.getElementById('grandeImg');
+            let miniatureActuelle = document.getElementById(image.dataset.miniature);
+            let prochaineMiniature = null;
+
+            if (direction === 'right') {
+                // si on est sur la troisième miniature
+                if (miniatureActuelle === document.getElementById('miniatures').lastElementChild) {
+                    prochaineMiniature = document.getElementById('miniatures').firstElementChild;
+                } else {
+                    prochaineMiniature = miniatureActuelle.nextElementSibling;
+                }
+            } else if (direction === 'left') {
+                // si on est sur la première miniature
+                if (miniatureActuelle === document.getElementById('miniatures').firstElementChild) {
+                    prochaineMiniature = document.getElementById('miniatures').lastElementChild;
+                } else {
+                    prochaineMiniature = miniatureActuelle.previousElementSibling;
+                }
+            }
+
+            afficherImage(prochaineMiniature);
+        }
+    </script>
+</body>
+</html>
