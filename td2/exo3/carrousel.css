@@ -1,0 +1,69 @@
+html {
+    background: silver;
+    position: relative;
+}
+
+body {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 1px auto 2em;
+    position: relative;
+}
+
+header {
+    padding-left: 4em;
+}
+
+section {
+    max-width: 93%;
+    position: relative;
+}
+
+section div {
+    position: relative;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+section div img {
+    width: 100%;
+}
+
+section figure {
+    margin: 0;
+    padding: 0;
+    position: relative;
+    width: 100%;
+}
+
+section figure img {
+    width: 15%;
+}
+
+.neutre {
+    border: solid lightblue 2px;
+    opacity: 0.5;
+}
+
+.sombre {
+    border: solid black 2px;
+}
+
+#boite {
+    text-align: center;
+}
+
+#left, #right {
+    height: 50px;
+    width: 50px;
+}
+
+.flecheVisible {
+    visibility: visible;
+    opacity: 0.8;
+}
+
+.flecheCachee {
+    visibility: hidden;
+}
