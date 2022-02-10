@@ -1,0 +1,56 @@
+html {
+}
+
+body {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 auto;
+    padding-top: 1em;
+    padding-bottom: 2em;
+    position: relative;
+}
+
+#articles {
+    position: absolute;
+    right: 50px;
+    font-size: 80%;
+}
+
+article {
+    border: solid darkblue 2px;
+    margin: 3px;
+    padding: 5px;
+}
+
+header {
+    padding-left: 4em;
+}
+
+section {
+    padding-top: 2%;
+    padding-left: 5%;
+    position: relative;
+}
+
+#fleches {
+    text-align: center;
+    padding-right: 50%;
+}
+
+#fleches img {
+    height: 60px;
+}
+
+.neutre {
+    border: none;
+}
+
+.noir {
+    border: solid black 2px;
+}
+
+.mini {
+    display: inline-block;
+    width: 160px;
+    height: auto;
+}
