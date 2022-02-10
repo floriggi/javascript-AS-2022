@@ -29,7 +29,7 @@
 
     <section>
         <div>
-            <img src="img/img1.jpg" alt="photo de chaton" id="grandeImg" data-miniature="mini1">
+            <img src="img/img1.jpg" alt="photo de chaton" id="grandeImg">
             <figure id="fleches">
                 <img src="img/left.png" alt="gauche" id="left" onclick="changerImage(this.id)">
                 <img src="img/right.png" alt="droite" id="right" onclick="changerImage(this.id)">
@@ -37,9 +37,9 @@
         </div>
 
         <figure id="miniatures">
-            <img src="img/img1.jpg" alt="mini 1" class="mini noir" id="mini1" onMouseOver="afficherImage(this)">
-            <img src="img/img2.jpg" alt="mini 2" class="mini" id="mini2" onMouseOver="afficherImage(this)">
-            <img src="img/img3.jpg" alt="mini 3" class="mini" id="mini3" onMouseOver="afficherImage(this)">
+            <img src="img/img1.jpg" alt="mini 1" class="mini noir" id="mini1" onclick="afficherImage(this)">
+            <img src="img/img2.jpg" alt="mini 2" class="mini" id="mini2" onclick="afficherImage(this)">
+            <img src="img/img3.jpg" alt="mini 3" class="mini" id="mini3" onclick="afficherImage(this)">
         </figure>
     </section>
 
@@ -52,7 +52,6 @@
         function afficherImage(miniature) {
             let image = document.getElementById('grandeImg');
             image.src = miniature.src;
-            image.dataset.miniature = miniature.id;
 
             miniature.className = 'mini noir';
             ancienne.className = 'mini neutre';
@@ -65,23 +64,21 @@
          * @param direction gauche ou droite
          */
         function changerImage(direction) {
-            let image = document.getElementById('grandeImg');
-            let miniatureActuelle = document.getElementById(image.dataset.miniature);
             let prochaineMiniature = null;
 
             if (direction === 'right') {
                 // si on est sur la troisième miniature
-                if (miniatureActuelle === document.getElementById('miniatures').lastElementChild) {
+                if (ancienne === document.getElementById('miniatures').lastElementChild) {
                     prochaineMiniature = document.getElementById('miniatures').firstElementChild;
                 } else {
-                    prochaineMiniature = miniatureActuelle.nextElementSibling;
+                    prochaineMiniature = ancienne.nextElementSibling;
                 }
             } else if (direction === 'left') {
                 // si on est sur la première miniature
-                if (miniatureActuelle === document.getElementById('miniatures').firstElementChild) {
+                if (ancienne === document.getElementById('miniatures').firstElementChild) {
                     prochaineMiniature = document.getElementById('miniatures').lastElementChild;
                 } else {
-                    prochaineMiniature = miniatureActuelle.previousElementSibling;
+                    prochaineMiniature = ancienne.previousElementSibling;
                 }
             }
 

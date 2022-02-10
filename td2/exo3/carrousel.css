@@ -53,17 +53,3 @@ section figure img {
 #boite {
     text-align: center;
 }
-
-#left, #right {
-    height: 50px;
-    width: 50px;
-}
-
-.flecheVisible {
-    visibility: visible;
-    opacity: 0.8;
-}
-
-.flecheCachee {
-    visibility: hidden;
-}

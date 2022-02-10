@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Le Carrousel</title>
+    <link rel="stylesheet" type="text/css" href="carrousel.css">
+</head>
+
+<body>
+    <section>
+        <div>
+            <img src="img/pub1.jpg" alt="pub" id="grandeImg">
+        </div>
+
+        <figure id="miniatures">
+            <img src="img/pub1.jpg" alt="mini 1" class="sombre" id="pub1" onclick="afficherImage(this);">
+            <img src="img/pub2.jpg" alt="mini 2" class="neutre" id="pub2" onclick="afficherImage(this);">
+            <img src="img/pub3.jpg" alt="mini 3" class="neutre" id="pub3" onclick="afficherImage(this);">
+            <img src="img/pub4.jpg" alt="mini 4" class="neutre" id="pub4" onclick="afficherImage(this);">
+            <img src="img/pub5.jpg" alt="mini 5" class="neutre" id="pub5" onclick="afficherImage(this);">
+            <img src="img/pub6.jpg" alt="mini 6" class="neutre" id="pub6" onclick="afficherImage(this);">
+        </figure>
+    </section>
+
+
+    <script>
+        let intervalle = setInterval(changerImage, 4000);
+        let ancienneMiniature = document.getElementById('pub1');
+
+        function afficherImage(miniature) {
+            let image = document.getElementById('grandeImg');
+            image.src = miniature.src;
+
+            miniature.className = 'sombre';
+            ancienneMiniature.className = 'neutre';
+            ancienneMiniature = miniature;
+
+            remettreAZeroIntervalle();
+        }
+
+        function changerImage() {
+            let derniereMiniatureDeLaListe = document.getElementById('miniatures').lastElementChild;
+            let prochaineMiniature;
+
+            if (ancienneMiniature.isSameNode(derniereMiniatureDeLaListe)) {
+                prochaineMiniature = document.getElementById('miniatures').firstElementChild;
+            } else {
+                prochaineMiniature = ancienneMiniature.nextElementSibling;
+            }
+
+            afficherImage(prochaineMiniature);
+        }
+
+        function remettreAZeroIntervalle() {
+            clearInterval(intervalle);
+            intervalle = setInterval(changerImage, 3500);
+        }
+    </script>
+</body>
+</html>

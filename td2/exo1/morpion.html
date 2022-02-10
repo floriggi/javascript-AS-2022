@@ -48,12 +48,11 @@
 
         window.onkeyup = function(event) {
             if (caseActive !== null && !caseActive.classList.contains('desactiver')) {
-                const key = event.keyCode ? event.keyCode : event.which;
 
-                if (key === 79) { //si touche o
+                if (event.key === 'o') {
                     caseActive.src = 'images/rond.gif';
                     caseActive.className = 'desactiver';
-                } else if (key === 88) { // si touche x
+                } else if (event.key === 'x') {
                     caseActive.src = 'images/croix.gif';
                     caseActive.className = 'desactiver';
                 }
