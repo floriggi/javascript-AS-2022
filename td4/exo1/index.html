@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>test ajax avec javascript</title>
+</head>
+
+<body>
+    <button onclick="lancerRequeteAjax()">
+        Effectuer une requête Ajax
+    </button>
+
+    <button onclick="lancerRequeteAjaxAvecAsync()">
+        Effectuer une requête Ajax avec Async
+    </button>
+
+    <script type="text/javascript">
+        const URL = 'test.html';
+
+        /**
+         * Lance une requête AJAX.
+         */
+        function lancerRequeteAjax() {
+            fetch(URL)
+                .then(function (reponse) {
+                    if (reponse.ok) {
+                        return reponse.text();
+                    } else {
+                        alert('Un problème est survenu avec la requête.');
+                    }
+                })
+                .then(function (html) {
+                    afficherResultat(html);
+                })
+                .catch(function (erreur) {
+                    alert('Abandon :( Erreur dans la requête AJAX : ' + erreur);
+                    return false;
+                });
+        }
+
+        /**
+         * Lance une requête AJAX.
+         * Async - await est utilisé en lieu et place de la syntaxe habituelle.
+         */
+        async function lancerRequeteAjaxAvecAsync() {
+            try {
+                const reponse = await fetch(URL);
+                afficherResultat(await reponse.text());
+            } catch (e) {
+                alert('Erreur dans la requête AJAX : ' + e);
+            }
+        }
+
+        /**
+         * Affiche le résultat de la requête dans un alert.
+         *
+         * @param texte le texte HTML
+         */
+        function afficherResultat(texte) {
+            alert(texte);
+        }
+    </script>
+</body>
+</html>
