@@ -97,14 +97,13 @@
                 .then(function (json) {
                     const selectDepartements = document.getElementById('departement');
 
-                    json.forEach(function (departement) {
+                    for (const departement of json) {
                         const option = document.createElement('option');
-                        const texte = document.createTextNode(departement.nom);
-                        option.appendChild(texte);
+                        option.innerHTML = departement.nom;
                         option.value = departement.code;
 
                         selectDepartements.appendChild(option);
-                    })
+                    }
                 })
                 .catch(function (erreur) {
                     alert('erreur : ' + erreur);
@@ -131,14 +130,14 @@
                         // on vide le select des villes
                         selectVilles.options.length = 0;
 
-                        json.forEach(function (ville) {
+                        for (const ville of json) {
                             const option = document.createElement('option');
                             const texte = document.createTextNode(ville.nom + ' (' + ville.codesPostaux[0] + ')');
                             option.appendChild(texte);
                             option.value = ville.code;
 
                             selectVilles.appendChild(option);
-                        })
+                        }
                     })
                     .catch(function (erreur) {
                         alert('erreur : ' + erreur);
