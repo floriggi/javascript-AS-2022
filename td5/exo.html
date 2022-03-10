@@ -19,12 +19,18 @@
         <h1>Gestion des &Eacute;tudiants</h1>
 
         <div class="row">
-            <button class="btn btn-link">Ajouter un étudiant</button>
+            <button class="btn btn-link" @click="effacerFormulaire()">Ajouter un étudiant</button>
         </div>
 
         <div class="row">
             <div class="col-6">
-                <ul id="etudiants" class="list-group" >
+                <ul id="etudiants" class="list-group">
+                    <li v-for="etudiant in etudiants"
+                        class="list-group-item"
+                        v-bind:class="etudiant.id === etudiantForm.id ? 'list-group-item-info' : ''"
+                        @click="chargerFormulaire(etudiant)">
+                        {{etudiant.prenom}} {{etudiant.nom}}
+                    </li>
                 </ul>
             </div>
 
@@ -34,19 +40,25 @@
                 <form>
                     <div class="form-group">
                         <label for="prenom">Prénom</label>
-                        <input type="text" id="prenom" name="prenom" class="form-control">
+                        <input type="text" id="prenom" name="prenom" class="form-control" v-model="etudiantForm.prenom">
                     </div>
                     <div class="form-group">
                         <label for="nom">Nom</label>
-                        <input type="text" id="nom" name="nom" class="form-control">
+                        <input type="text" id="nom" name="nom" class="form-control" v-model="etudiantForm.nom">
                     </div>
                     <div class="form-group">
                         <label for="ville">Ville</label>
-                        <input type="text" id="ville" name="ville" class="form-control">
+                        <input type="text" id="ville" name="ville" class="form-control" v-model="etudiantForm.ville">
                     </div>
 
-                    <button type="button" class="btn btn-primary">Enregistrer</button>
-                    <button type="button" class="btn btn-danger">Supprimer
+                    <button type="button" class="btn btn-primary" v-if="etudiantForm.id == null" @click="ajouter()" v-bind:disabled="!estValide()">
+                        Enregistrer
+                    </button>
+                    <button type="button" class="btn btn-success" v-if="etudiantForm.id !== null" @click="modifier()" v-bind:disabled="!estValide()">
+                        Enregistrer
+                    </button>
+                    <button type="button" class="btn btn-danger" v-if="etudiantForm.id !== null" @click="supprimer()">
+                        Supprimer
                     </button>
                 </form>
             </div>
@@ -60,10 +72,94 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="text/javascript">
+        class Etudiant {
+            id;
+            nom;
+            prenom;
+            ville;
+
+            constructor() {
+                this.id = null;
+                this.nom = '';
+                this.prenom = '';
+                this.ville = '';
+            }
+        }
 
         const URL = 'http://localhost:9090/etudiants/';
 
-
+        let app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    etudiants: [],
+                    etudiantForm: new Etudiant()
+                }
+            },
+            async mounted() {
+              this.etudiants = await this.getEtudiants();
+            },
+            methods: {
+                async getEtudiants() {
+                    try {
+                        const reponse = await axios.get(URL);
+                        return reponse.data;
+                    } catch (e) {
+                        console.error(e);
+                    }
+                },
+                async ajouter() {
+                    try {
+                        const reponse = await axios.post(URL, this.etudiantForm);
+                        if (reponse.status === 200) {
+                            this.etudiants = await this.getEtudiants();
+                            this.copierEtudiant(reponse.data);
+                        }
+                    } catch (e) {
+                        console.error(e);
+                    }
+                },
+                async modifier() {
+                    try {
+                        const reponse = await axios.put(URL + this.etudiantForm.id, this.etudiantForm);
+                        if (reponse.status === 200) {
+                            this.etudiants = await this.getEtudiants();
+                            this.copierEtudiant(reponse.data);
+                        }
+                    } catch (e) {
+                        console.error(e);
+                    }
+                },
+                async supprimer() {
+                    if (confirm("Voulez-vous supprimer ?")) {
+                        try {
+                            const reponse = await axios.delete(URL + this.etudiantForm.id);
+                            if (reponse.status === 200) {
+                                this.etudiants = await this.getEtudiants();
+                                this.effacerFormulaire();
+                            }
+                        } catch (e) {
+                            console.error(e);
+                        }
+                    }
+                },
+                chargerFormulaire(etudiant) {
+                    this.copierEtudiant(etudiant);
+                },
+                effacerFormulaire() {
+                    this.copierEtudiant(new Etudiant());
+                },
+                copierEtudiant(etudiant) {
+                    this.etudiantForm.id = etudiant.id;
+                    this.etudiantForm.nom = etudiant.nom;
+                    this.etudiantForm.prenom = etudiant.prenom;
+                    this.etudiantForm.ville = etudiant.ville;
+                },
+                estValide() {
+                    return this.etudiantForm.nom && this.etudiantForm.prenom && this.etudiantForm.ville;
+                }
+            }
+        });
     </script>
 </body>
 </html>
